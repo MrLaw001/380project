@@ -32,7 +32,9 @@ public class UserManagementController {
     @PostMapping("/create")
     public String create(@ModelAttribute("appUser") UserForm form)
             throws IOException {
-        umService.createAppUser(form.getUsername(), passwordEncoder.encode(form.getPassword()), form.getConfirmpassword(), form.getFullname(), form.getEmail(), form.getDelivery(), form.getRoles());
+        umService.createAppUser(form.getUsername(), passwordEncoder.encode(form.getPassword()),
+                form.getConfirmpassword(), form.getFullname(),
+                form.getEmail(), form.getDelivery(), form.getRoles());
         logger.info("User " + form.getUsername() + " created.");
         return "redirect:/user/list";
     }
@@ -47,6 +49,11 @@ public class UserManagementController {
         umService.delete(username);
         logger.fatal("User " + username + " deleted.");
         return "redirect:/user/list";
+    }
+
+    @GetMapping("/edit")
+    public ModelAndView edit() {
+        return new ModelAndView("user/edit", "appUser", new UserForm());
     }
 
 }
